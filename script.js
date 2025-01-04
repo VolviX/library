@@ -7,10 +7,11 @@ function Book(title, author, pages, read) {
     this.read = read;
 
     this.getInfo = function() {
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "already read" : "not read yet"}`;
+        return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "already read." : "not read yet."}`;
     };
 }
 
-function addBookToLibrary() {
-  // do stuff here
+function addBookToLibrary(title, author, pages, read) {
+    const newBook = new Book(title, author, pages, read);
+    myLibrary.push(newBook);
 }
