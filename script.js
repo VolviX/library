@@ -23,10 +23,11 @@ function addBookToLibrary(title, author, pages, read) {
 
 function display() {
     list.replaceChildren();
-    myLibrary.forEach((book) => {
+    myLibrary.forEach((book, index) => {
         const display = document.createElement('li');
         display.textContent = book.getInfo();
-        list.appendChild(display); 
+        display.setAttribute('index-number', index);
+        list.appendChild(display);
     });
 }
 
@@ -38,8 +39,7 @@ const readCheckbox = document.querySelector('input[name="read"]');
 const addButton = document.querySelector('.addButton');
 
 addButton.addEventListener('click', (event) => {
-    console.log('tikladin')
-    event.preventDefault();
+    event.preventDefault(); // prevents refreshes when clicked
 
     if (!titleInput.value.trim() || !authorInput.value.trim() || !pagesInput.value.trim()) {
         alert('Please fill out all fields.');
@@ -52,6 +52,14 @@ addButton.addEventListener('click', (event) => {
         addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), false);
     }
 
+    display();
+});
+
+list.addEventListener('click', (event) => {
+    const listItem = event.target; // The clicked list item
+    const index = listItem.getAttribute('index-number'); // Get the index
+    console.log('Clicked book:', myLibrary[index]);
+    myLibrary.splice(index, 1);
     display();
 });
 
