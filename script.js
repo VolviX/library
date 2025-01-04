@@ -18,12 +18,41 @@ function Book(title, author, pages, read) {
 function addBookToLibrary(title, author, pages, read) {
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
+    return newBook;
 }
 
-const main = document.querySelector('.main');
+function display() {
+    list.replaceChildren();
+    myLibrary.forEach((book) => {
+        const display = document.createElement('li');
+        display.textContent = book.getInfo();
+        list.appendChild(display); 
+    });
+}
 
-myLibrary.forEach((book) => {
-    const display = document.createElement('li');
-    display.textContent = book.getInfo();
-    main.appendChild(display); 
+const list = document.querySelector('.list');
+const titleInput = document.querySelector('input[name="title"]');
+const authorInput = document.querySelector('input[name="author"]');
+const pagesInput = document.querySelector('input[name="pages"]');
+const readCheckbox = document.querySelector('input[name="read"]');
+const addButton = document.querySelector('.addButton');
+
+addButton.addEventListener('click', (event) => {
+    console.log('tikladin')
+    event.preventDefault();
+
+    if (!titleInput.value.trim() || !authorInput.value.trim() || !pagesInput.value.trim()) {
+        alert('Please fill out all fields.');
+        return;
+    }
+
+    if (readCheckbox.checked) {
+        addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), true);
+    } else {
+        addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), false);
+    }
+
+    display();
 });
+
+display();
