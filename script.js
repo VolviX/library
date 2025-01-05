@@ -25,10 +25,27 @@ function display() {
     list.replaceChildren();
     myLibrary.forEach((book, index) => {
         const display = document.createElement('li');
+        const update = document.createElement('button');
+        const remove = document.createElement('button');
+
         display.textContent = book.getInfo();
-        display.setAttribute('index-number', index);
+        update.textContent = 'Read';
+        remove.textContent = 'Remove';
+
+        remove.setAttribute('index-number', index);
+        update.setAttribute('index-number', index);
+        display.appendChild(update);
+        display.appendChild(remove);
         list.appendChild(display);
     });
+}
+
+function toggleRead(index) {
+    Book.prototype.toggleRead = function() {
+        this.read = !this.read;
+    };
+
+    myLibrary[index].toggleRead();
 }
 
 const list = document.querySelector('.list');
@@ -40,27 +57,34 @@ const addButton = document.querySelector('.addButton');
 
 addButton.addEventListener('click', (event) => {
     event.preventDefault(); // prevents refreshes when clicked
-
+    
     if (!titleInput.value.trim() || !authorInput.value.trim() || !pagesInput.value.trim()) {
         alert('Please fill out all fields.');
         return;
     }
-
+    
     if (readCheckbox.checked) {
         addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), true);
     } else {
         addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), false);
     }
-
+    
     display();
 });
 
 list.addEventListener('click', (event) => {
-    const listItem = event.target; // The clicked list item
-    const index = listItem.getAttribute('index-number'); // Get the index
-    console.log('Clicked book:', myLibrary[index]);
-    myLibrary.splice(index, 1);
+    const clickedElement = event.target;
+    const index = clickedElement.getAttribute('index-number');
+
+    if (clickedElement.textContent == 'Remove') {
+        myLibrary.splice(index, 1);
+    }
+
+    if (clickedElement.textContent == 'Read') {
+        toggleRead(index);
+    }
+    
     display();
 });
 
-display();
+display(); // first load
