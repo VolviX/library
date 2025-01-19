@@ -34,15 +34,12 @@ class Book {
             list.appendChild(display);
         });
     }
+    
+    static toggleRead(index) {
+        myLibrary[index].read = !myLibrary[index].read;
+    }
 }
 
-function toggleRead(index) {
-    Book.prototype.toggleRead = function() {
-        this.read = !this.read;
-    };
-
-    myLibrary[index].toggleRead();
-}
 
 const myLibrary = [
     new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, true),
@@ -83,7 +80,7 @@ list.addEventListener('click', (event) => {
     }
 
     if (clickedElement.textContent == 'Read') {
-        toggleRead(index);
+        Book.toggleRead(index);
     }
     
     Book.display();
