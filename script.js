@@ -1,24 +1,20 @@
-const myLibrary = [
-    new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, true),
-    new Book("Brave New World", "Aldous Huxley", 268, false),
-    new Book("Pride and Prejudice", "Jane Austen", 279, true),
-];
-
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-
-    this.getInfo = function() {
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    
+    getInfo() {
         return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "already read." : "not read yet."}`;
     };
-}
 
-function addBookToLibrary(title, author, pages, read) {
-    const newBook = new Book(title, author, pages, read);
-    myLibrary.push(newBook);
-    return newBook;
+    static addBookToLibrary(title, author, pages, read) {
+        const newBook = new Book(title, author, pages, read);
+        myLibrary.push(newBook);
+        return newBook;
+    }
 }
 
 function display() {
@@ -48,6 +44,12 @@ function toggleRead(index) {
     myLibrary[index].toggleRead();
 }
 
+const myLibrary = [
+    new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, true),
+    new Book("Brave New World", "Aldous Huxley", 268, false),
+    new Book("Pride and Prejudice", "Jane Austen", 279, true),
+];
+
 const list = document.querySelector('.list');
 const titleInput = document.querySelector('input[name="title"]');
 const authorInput = document.querySelector('input[name="author"]');
@@ -64,9 +66,9 @@ addButton.addEventListener('click', (event) => {
     }
     
     if (readCheckbox.checked) {
-        addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), true);
+        Book.addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), true);
     } else {
-        addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), false);
+        Book.addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), false);
     }
     
     display();
