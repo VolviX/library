@@ -40,7 +40,6 @@ class Book {
     }
 }
 
-
 const myLibrary = [
     new Book("The Great Gatsby", "F. Scott Fitzgerald", 180, true),
     new Book("Brave New World", "Aldous Huxley", 268, false),
