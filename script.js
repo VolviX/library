@@ -15,25 +15,25 @@ class Book {
         myLibrary.push(newBook);
         return newBook;
     }
-}
 
-function display() {
-    list.replaceChildren();
-    myLibrary.forEach((book, index) => {
-        const display = document.createElement('li');
-        const update = document.createElement('button');
-        const remove = document.createElement('button');
-
-        display.textContent = book.getInfo();
-        update.textContent = 'Read';
-        remove.textContent = 'Remove';
-
-        remove.setAttribute('index-number', index);
-        update.setAttribute('index-number', index);
-        display.appendChild(update);
-        display.appendChild(remove);
-        list.appendChild(display);
-    });
+    static display() {
+        list.replaceChildren();
+        myLibrary.forEach((book, index) => {
+            const display = document.createElement('li');
+            const update = document.createElement('button');
+            const remove = document.createElement('button');
+    
+            display.textContent = book.getInfo();
+            update.textContent = 'Read';
+            remove.textContent = 'Remove';
+    
+            remove.setAttribute('index-number', index);
+            update.setAttribute('index-number', index);
+            display.appendChild(update);
+            display.appendChild(remove);
+            list.appendChild(display);
+        });
+    }
 }
 
 function toggleRead(index) {
@@ -71,7 +71,7 @@ addButton.addEventListener('click', (event) => {
         Book.addBookToLibrary(titleInput.value.trim(), authorInput.value.trim(), parseInt(pagesInput.value.trim()), false);
     }
     
-    display();
+    Book.display();
 });
 
 list.addEventListener('click', (event) => {
@@ -86,7 +86,7 @@ list.addEventListener('click', (event) => {
         toggleRead(index);
     }
     
-    display();
+    Book.display();
 });
 
-display(); // first load
+Book.display(); // first load
